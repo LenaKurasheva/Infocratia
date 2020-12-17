@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/groups"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_group_24"
+        android:title="@string/groups"/>
+    <item
+        android:id="@+id/themes"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_content_paste_24"
+        android:title="@string/themes"/>
+    <item
+        android:id="@+id/cabinet"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_perm_identity_24"
+        android:title="@string/cabinet"/>
+</menu>

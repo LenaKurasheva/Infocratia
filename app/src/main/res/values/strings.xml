@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Infocratia</string>
+    <string name="all">Все</string>
+    <string name="subscriptions">Подписки</string>
+    <string name="groups">Группы</string>
+    <string name="themes">Темы</string>
+    <string name="cabinet">Кабинет</string>
 </resources>
