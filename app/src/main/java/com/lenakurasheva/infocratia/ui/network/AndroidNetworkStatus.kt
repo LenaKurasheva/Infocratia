@@ -17,10 +17,12 @@ class AndroidNetworkStatus(context: Context) : INetworkStatus {
         connectivityManager.registerNetworkCallback(request, object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 statusSubject.onNext(true)
+                print("***NETWORK AVAILABLE*** ")
             }
 
             override fun onLost(network: Network) {
                 statusSubject.onNext(false)
+                print("***NETWORK IS NOT AVAILABLE*** ")
             }
         })
     }
