@@ -42,7 +42,7 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
         loadData()
 
         groupsListPresenter.itemClickListener = { view ->
-//            router.navigateTo(Screens.GroupScreen(groupsListPresenter.groups[view.pos]))
+            router.navigateTo(Screens.GroupScreen(groupsListPresenter.groups[view.pos]))
         }
     }
 

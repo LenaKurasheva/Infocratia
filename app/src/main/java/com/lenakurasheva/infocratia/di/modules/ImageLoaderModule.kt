@@ -5,7 +5,6 @@ import com.lenakurasheva.infocratia.mvp.model.image.IImageLoader
 import com.lenakurasheva.infocratia.ui.image.GlideImageLoader
 import dagger.Module
 import dagger.Provides
-import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Singleton
 
 @Module
