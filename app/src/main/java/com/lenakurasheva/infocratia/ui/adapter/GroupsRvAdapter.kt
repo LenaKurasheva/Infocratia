@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.lenakurasheva.infocratia.R
+import com.lenakurasheva.infocratia.mvp.model.image.IImageLoader
 import com.lenakurasheva.infocratia.mvp.presenter.list.IGroupsListPresenter
 import com.lenakurasheva.infocratia.mvp.view.list.GroupItemView
 import kotlinx.android.extensions.LayoutContainer
@@ -14,8 +15,8 @@ import javax.inject.Inject
 
 class GroupsRvAdapter (val presenter: IGroupsListPresenter) : RecyclerView.Adapter<GroupsRvAdapter.ViewHolder>() {
 
-//    @Inject
-//    lateinit var imageLoader: IImageLoader<ImageView>
+    @Inject
+    lateinit var imageLoader: IImageLoader<ImageView>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_group, parent, false)).apply {
@@ -35,6 +36,7 @@ class GroupsRvAdapter (val presenter: IGroupsListPresenter) : RecyclerView.Adapt
     inner class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         GroupItemView,
         LayoutContainer {
+        val container = containerView.findViewById<ImageView>(R.id.iv_image)
         override var pos = -1
 
         override fun setTitle(text: String) = with(containerView){
@@ -47,7 +49,7 @@ class GroupsRvAdapter (val presenter: IGroupsListPresenter) : RecyclerView.Adapt
         }
 
         override fun loadImage(url: String) {
-//            imageLoader.loadInto(url, iv_image)
+            imageLoader.loadInto(url, container)
         }
     }
 

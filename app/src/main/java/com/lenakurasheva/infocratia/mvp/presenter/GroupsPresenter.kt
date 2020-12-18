@@ -26,9 +26,9 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
 
         override fun bindView(view: GroupItemView) {
             val group = groups[view.pos]
-            view.setTitle(group.title)
-            view.setDescription(group.description)
-            group.groupImage?.let { view.loadImage(it) }
+            view.setTitle(group.name)
+            group.about?.let { view.setDescription(group.about) }
+            group.image?.let { view.loadImage(it) }
         }
         override fun getCount() = groups.size
     }

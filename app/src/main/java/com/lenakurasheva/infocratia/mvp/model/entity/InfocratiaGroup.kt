@@ -7,9 +7,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class InfocratiaGroup (
-    @Expose val title: String,
-    @Expose val description: String,
+    @Expose val name: String,
+    @Expose val about: String?,
     @Expose val id: String,
-    @Expose val groupImage: String?
+    @Expose val image: String?
 
 ): Parcelable

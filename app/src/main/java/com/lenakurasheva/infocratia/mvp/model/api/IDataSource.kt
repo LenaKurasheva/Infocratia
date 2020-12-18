@@ -8,16 +8,16 @@ import retrofit2.http.GET
 
 interface IDataSource {
 
-    @GET
+    @GET(value = "groups")
     fun getAllGroups(): Single<List<InfocratiaGroup>>
 
-    @GET
-    fun getAllThemes(): Single<List<InfocratiaTheme>>
-
-    @GET
-    fun getGroupsUserSubscribedTo(): Single<List<InfocratiaGroup>>
-
-    @GET
-    fun getThemesUserSubscribedTo(): Single<List<InfocratiaTheme>>
+//    @GET
+//    fun getAllThemes(): Single<List<InfocratiaTheme>>
+//
+//    @GET
+//    fun getGroupsUserSubscribedTo(): Single<List<InfocratiaGroup>>
+//
+//    @GET
+//    fun getThemesUserSubscribedTo(): Single<List<InfocratiaTheme>>
 
 }
