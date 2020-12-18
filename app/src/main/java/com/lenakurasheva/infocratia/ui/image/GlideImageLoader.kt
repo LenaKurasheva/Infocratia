@@ -14,6 +14,7 @@ class GlideImageLoader(): IImageLoader<ImageView> {
         Glide.with(container.context)
             .asBitmap()
             .load(url)
+            .centerCrop()
             .listener(object : RequestListener<Bitmap> {
                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                     //Do stuff with error
@@ -31,6 +32,7 @@ class GlideImageLoader(): IImageLoader<ImageView> {
                 }
             })
             .into(container)
+
     }
 
 }
