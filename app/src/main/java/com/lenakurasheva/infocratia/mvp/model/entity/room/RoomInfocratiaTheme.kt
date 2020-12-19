@@ -8,6 +8,6 @@ class RoomInfocratiaTheme (
     @PrimaryKey var id: String,
     var name: String,
     var about: String,
-    var creationDate: String,
-    var groupId: String
+    var groupId: String,
+    var pubDate: String
     )

@@ -21,12 +21,14 @@ class MainPresenter(): MvpPresenter<MainView>() {
     }
 
     fun bottomMenuGroupsClicked(): Boolean {
+        print("bottomMenuGroupsClicked")
         router.replaceScreen(Screens.GroupsScreen())
         return true
     }
 
     fun bottomMenuThemesClicked(): Boolean {
-    return true //TODO
+        router.replaceScreen(Screens.ThemesScreen())
+        return true
     }
 
     fun bottomMenuCabinetClicked(): Boolean {

@@ -6,11 +6,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class InfocratiaTheme (
-    @Expose val title: String,
-    @Expose val description: String,
     @Expose val id: String,
-    @Expose val body: String,
-    @Expose val themeImage: String,
-    @Expose val group: InfocratiaGroup?
+    @Expose val name: String,
+    @Expose val about: String?,
+    @Expose val groupId: String?,
+    @Expose val pubDate: String
 ): Parcelable
 

@@ -11,8 +11,8 @@ interface IDataSource {
     @GET(value = "groups")
     fun getAllGroups(): Single<List<InfocratiaGroup>>
 
-//    @GET
-//    fun getAllThemes(): Single<List<InfocratiaTheme>>
+    @GET(value = "themes")
+    fun getAllThemes(): Single<List<InfocratiaTheme>>
 //
 //    @GET
 //    fun getGroupsUserSubscribedTo(): Single<List<InfocratiaGroup>>

@@ -9,6 +9,7 @@ import com.lenakurasheva.infocratia.mvp.presenter.MainPresenter
 import com.lenakurasheva.infocratia.mvp.view.MainView
 import com.lenakurasheva.infocratia.ui.App
 import com.lenakurasheva.infocratia.ui.BackButtonListener
+import kotlinx.android.synthetic.main.activity_main.*
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import ru.terrakok.cicerone.NavigatorHolder
@@ -36,7 +37,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.groups -> presenter.bottomMenuGroupsClicked()
                 R.id.themes -> presenter.bottomMenuThemesClicked()

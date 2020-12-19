@@ -4,6 +4,7 @@ import com.lenakurasheva.infocratia.di.modules.*
 import com.lenakurasheva.infocratia.mvp.presenter.GroupPresenter
 import com.lenakurasheva.infocratia.mvp.presenter.GroupsPresenter
 import com.lenakurasheva.infocratia.mvp.presenter.MainPresenter
+import com.lenakurasheva.infocratia.mvp.presenter.ThemesPresenter
 import com.lenakurasheva.infocratia.ui.activity.MainActivity
 import com.lenakurasheva.infocratia.ui.adapter.GroupsRvAdapter
 import com.lenakurasheva.infocratia.ui.fragment.GroupFragment
@@ -15,6 +16,7 @@ import javax.inject.Singleton
     AppModule::class,
     NavigationModule::class,
     GroupsModule::class,
+    ThemesModule::class,
     ApiModule::class,
     ImageLoaderModule::class
 ])
@@ -25,4 +27,5 @@ interface AppComponent {
     fun inject(groupsRvAdapter: GroupsRvAdapter)
     fun inject(groupPresenter: GroupPresenter)
     fun inject (groupFragment: GroupFragment)
+    fun inject(themesPresenter: ThemesPresenter)
 }

@@ -23,7 +23,8 @@ class ApiModule {
 
     @Named("baseUrl v1")
     @Provides
-    fun baseUrl() = "http://infocratia.space/api/v1/"
+//    fun baseUrl() = "http://infocratia.space/api/v1/"
+    fun baseUrl() = "http://192.168.1.39/api/v1/"
 
     @Singleton
     @Provides
