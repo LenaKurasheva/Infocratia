@@ -2,6 +2,7 @@ package com.lenakurasheva.infocratia.di.modules
 
 import androidx.room.Room
 import com.lenakurasheva.infocratia.mvp.model.entity.room.db.Database
+import com.lenakurasheva.infocratia.mvp.model.entity.room.db.MIGRATION_1_2
 import com.lenakurasheva.infocratia.ui.App
 import dagger.Module
 import dagger.Provides
@@ -17,7 +18,7 @@ class AppModule(val app: App) {
 
     @Singleton
     @Provides
-    fun database(app: App): Database = Room.databaseBuilder(app, Database::class.java, Database.DB_NAME).build()
+    fun database(app: App): Database = Room.databaseBuilder(app, Database::class.java, Database.DB_NAME).addMigrations(MIGRATION_1_2).build()
 
     @Provides
     fun app(): App{

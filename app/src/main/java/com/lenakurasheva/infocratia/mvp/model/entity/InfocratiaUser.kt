@@ -7,8 +7,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class InfocratiaUser (
-    @Expose val id: String,
-    @Expose val login: String,
-    @Expose val email: String,
-    @Expose val userImage: String?
+    @Expose val id: String?,
+    @Expose val login: String?,
+    @Expose val email: String?,
+    @Expose val userImage: String?,
+    @Expose val accessToken: String?
 ): Parcelable

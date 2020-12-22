@@ -18,7 +18,8 @@ import javax.inject.Singleton
     GroupsModule::class,
     ThemesModule::class,
     ApiModule::class,
-    ImageLoaderModule::class
+    ImageLoaderModule::class,
+    AuthModule::class
 ])
 interface AppComponent {
     fun inject(mainActivity: MainActivity)

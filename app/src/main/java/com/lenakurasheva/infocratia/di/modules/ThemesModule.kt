@@ -9,6 +9,7 @@ import com.lenakurasheva.infocratia.mvp.model.repo.retrofit.RetrofitInfocratiaTh
 import com.lenakurasheva.infocratia.mvp.network.INetworkStatus
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module

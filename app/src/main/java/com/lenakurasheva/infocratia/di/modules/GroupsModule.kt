@@ -10,6 +10,7 @@ import com.lenakurasheva.infocratia.mvp.network.INetworkStatus
 import com.lenakurasheva.infocratia.ui.network.AndroidNetworkStatus
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module

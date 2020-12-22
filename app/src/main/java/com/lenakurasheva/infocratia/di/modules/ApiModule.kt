@@ -21,10 +21,16 @@ import javax.inject.Singleton
 @Module
 class ApiModule {
 
+    val hostUrl = "http://infocratia.space/"
+
     @Named("baseUrl v1")
     @Provides
-//    fun baseUrl() = "http://infocratia.space/api/v1/"
-    fun baseUrl() = "http://192.168.1.39/api/v1/"
+    fun baseUrl(): String {
+        val baseUrl = hostUrl
+        return baseUrl
+    }
+    //    fun baseUrl() = "http://192.168.1.39/api/v1/"
+
 
     @Singleton
     @Provides

@@ -8,7 +8,7 @@ import com.lenakurasheva.infocratia.mvp.model.entity.room.dao.GroupDao
 import com.lenakurasheva.infocratia.mvp.model.entity.room.dao.ThemeDao
 import com.lenakurasheva.infocratia.mvp.model.entity.room.dao.UserDao
 
-@androidx.room.Database(entities = [RoomInfocratiaGroup::class, RoomInfocratiaTheme::class, RoomInfocratiaUser::class], version = 1)
+@androidx.room.Database(entities = [RoomInfocratiaGroup::class, RoomInfocratiaTheme::class, RoomInfocratiaUser::class], version = 2)
 abstract class Database : RoomDatabase() {
     abstract val groupDao: GroupDao
     abstract val themeDao: ThemeDao

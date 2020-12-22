@@ -32,8 +32,11 @@ interface UserDao {
     @Delete
     fun delete(users: List<RoomInfocratiaUser>)
 
+    @Query("DELETE FROM RoomInfocratiaUser")
+    fun deleteAll()
+
     @Query("SELECT * FROM RoomInfocratiaUser")
-    fun getAll(): List<RoomInfocratiaUser>
+    fun getAll(): List<RoomInfocratiaUser>?
 
     @Query("SELECT * FROM RoomInfocratiaUser WHERE login = :login LIMIT 1")
     fun findByLogin(login: String): RoomInfocratiaUser?

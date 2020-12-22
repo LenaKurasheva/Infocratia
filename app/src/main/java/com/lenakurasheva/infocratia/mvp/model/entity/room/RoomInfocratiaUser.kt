@@ -8,5 +8,6 @@ class RoomInfocratiaUser (
     @PrimaryKey val id: String,
     val login: String,
     val email: String,
-    val userImage: String?
+    val userImage: String?,
+    val accessToken: String?
     )
