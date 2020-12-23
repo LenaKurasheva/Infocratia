@@ -7,12 +7,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.gson.Gson
 import com.lenakurasheva.infocratia.mvp.model.api.IDataSource
 import com.lenakurasheva.infocratia.mvp.model.api.IGoogleAuth
+import com.lenakurasheva.infocratia.mvp.model.auth.IAuth
 import com.lenakurasheva.infocratia.mvp.model.cache.IInfocratiaUserCache
 import com.lenakurasheva.infocratia.mvp.model.cache.room.RoomInfocratiaUserCache
 import com.lenakurasheva.infocratia.mvp.model.entity.room.db.Database
 import com.lenakurasheva.infocratia.mvp.model.repo.IInfocratiaAuthRepo
 import com.lenakurasheva.infocratia.mvp.model.repo.retrofit.RetrofitInfocratiaAuthRepo
 import com.lenakurasheva.infocratia.ui.App
+import com.lenakurasheva.infocratia.ui.auth.AndroidAuth
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -26,15 +28,17 @@ import javax.inject.Singleton
 class AuthModule {
 
     @Named("requestCodeSignIn")
+    @Singleton
     @Provides
-    fun requestCode() = 5555
+    fun requestCode(): Int = 5555
 
     @Named("serverClientId")
+    @Singleton
     @Provides
-//    fun serverClientId() = "123473994034-090jhcsqv3qsjh1u0q8oqcii1tu0d2p4.apps.googleusercontent.com" // application type: android
     fun serverClientId() = "123473994034-9r6dr52ce9a012n07d4i7at5mk8k1uq2.apps.googleusercontent.com" // application type:: web application
 
     @Named("clientSecret")
+    @Singleton
     @Provides
     fun clientSecret() = "TbKnzuLs5pwnA3R5pJuQSytw"
 
@@ -73,4 +77,12 @@ class AuthModule {
     @Singleton
     @Provides
     fun infocratiaUserCache(db: Database): IInfocratiaUserCache = RoomInfocratiaUserCache(db)
+
+    @Singleton
+    @Provides
+    fun auth(@Named("serverClientId") serverClientId: String,
+             @Named("clientSecret") clientSecret: String,
+             @Named("requestCodeSignIn") requestCodeSignIn: Int,
+             account: GoogleSignInAccount?,
+             googleSignInClient: GoogleSignInClient): IAuth = AndroidAuth(serverClientId, clientSecret, requestCodeSignIn, account, googleSignInClient)
 }
