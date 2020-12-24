@@ -13,7 +13,6 @@ import com.lenakurasheva.infocratia.ui.BackButtonListener
 import com.lenakurasheva.infocratia.ui.MySubscriptionsButtonListener
 import com.lenakurasheva.infocratia.ui.adapter.ThemesRvAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_groups.*
 import kotlinx.android.synthetic.main.fragment_themes.*
 import kotlinx.android.synthetic.main.fragment_themes.subscriptions_tv
 import moxy.MvpAppCompatFragment
@@ -42,6 +41,8 @@ class ThemesFragment : MvpAppCompatFragment(), ThemesView, BackButtonListener,
     override fun init() {
         rv_themes.layoutManager = LinearLayoutManager(requireContext())
         rv_themes.adapter = adapter
+        subscriptions_tv.setOnClickListener{ mySubscriptionsPressed()}
+        all_tv.setOnClickListener { presenter.loadAllThemes() }
     }
 
     override fun updateThemesList() {
@@ -60,7 +61,7 @@ class ThemesFragment : MvpAppCompatFragment(), ThemesView, BackButtonListener,
 
     override fun backPressed() = presenter.backClick()
 
-    override fun mySubscriptionsPressed(): Boolean {
-        TODO("Not yet implemented")
+    override fun mySubscriptionsPressed() {
+        presenter.myThemesButtonPassed()
     }
 }

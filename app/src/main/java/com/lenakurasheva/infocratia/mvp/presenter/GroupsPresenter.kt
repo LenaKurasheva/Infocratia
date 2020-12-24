@@ -46,7 +46,7 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
         // the GoogleSignInAccount will be non-null.
         isUserAuth()
         viewState.init()
-        loadData()
+        loadAllGroups()
 
         groupsListPresenter.itemClickListener = { view ->
             router.navigateTo(Screens.GroupScreen(groupsListPresenter.groups[view.pos]))
@@ -67,7 +67,7 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
         } else viewState.signOut()
     }
 
-    fun loadData() {
+    fun loadAllGroups() {
         disposables.add(groupsRepoRetrofit.getAllGroups()
             .retry(3)
             .observeOn(uiScheduler)
@@ -89,5 +89,17 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
         super.onDestroy()
         disposables.dispose()
     }
+
+    fun myGroupsButtonPassed() {
+        disposables.add(groupsRepoRetrofit.getUserGroups()
+            .retry(3)
+            .observeOn(uiScheduler)
+            .subscribe(
+                {
+                    groupsListPresenter.groups.clear()
+                    groupsListPresenter.groups.addAll(it)
+                    viewState.updateGroupsList()
+                },
+                { println("onError: ${it.message}") }))    }
 
 }

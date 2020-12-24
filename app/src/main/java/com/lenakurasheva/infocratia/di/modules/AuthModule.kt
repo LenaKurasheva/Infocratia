@@ -17,10 +17,12 @@ import com.lenakurasheva.infocratia.ui.App
 import com.lenakurasheva.infocratia.ui.auth.AndroidAuth
 import dagger.Module
 import dagger.Provides
+import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.RuntimeException
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -35,12 +37,27 @@ class AuthModule {
     @Named("serverClientId")
     @Singleton
     @Provides
-    fun serverClientId() = "123473994034-9r6dr52ce9a012n07d4i7at5mk8k1uq2.apps.googleusercontent.com" // application type:: web application
+    fun serverClientId() =
+        "123473994034-9r6dr52ce9a012n07d4i7at5mk8k1uq2.apps.googleusercontent.com" // application type:: web application
 
     @Named("clientSecret")
     @Singleton
     @Provides
     fun clientSecret() = "TbKnzuLs5pwnA3R5pJuQSytw"
+
+    @Named("authToken")
+    @Singleton
+    @Provides
+    fun authToken(infocratiaUserCache: IInfocratiaUserCache): String =
+    try {"Bearer " +
+        infocratiaUserCache.getUser()
+            .observeOn(Schedulers.io())
+            .blockingGet()?.accessToken.toString()
+    } catch (e: RuntimeException){
+        e.printStackTrace()
+        ""
+    }
+
 
     @Provides
     fun  googleSignInOptions(@Named("serverClientId") serverClientId: String):  GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

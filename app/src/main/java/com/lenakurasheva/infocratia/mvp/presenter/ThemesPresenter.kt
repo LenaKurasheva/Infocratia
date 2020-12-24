@@ -47,7 +47,7 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
         // the GoogleSignInAccount will be non-null.
         isUserAuth()
         viewState.init()
-        loadData()
+        loadAllThemes()
 
         themesListPresenter.itemClickListener = { view ->
 //            router.navigateTo(Screens.ThemeScreen(themesListPresenter.themes[view.pos]))
@@ -68,7 +68,7 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
         } else viewState.signOut()
     }
 
-    fun loadData() {
+    fun loadAllThemes() {
         disposables.add(themesRepoRetrofit.getAllThemes()
             .retry(3)
             .observeOn(uiScheduler)
@@ -89,6 +89,19 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.dispose()
+    }
+
+    fun myThemesButtonPassed() {
+        disposables.add(themesRepoRetrofit.getUserThemes()
+            .retry(3)
+            .observeOn(uiScheduler)
+            .subscribe(
+                {themesListPresenter.themes.clear()
+                themesListPresenter.themes.addAll(it)
+                viewState.updateThemesList()
+                },
+                { println("onError: ${it.message}") }))
+
     }
 
 }

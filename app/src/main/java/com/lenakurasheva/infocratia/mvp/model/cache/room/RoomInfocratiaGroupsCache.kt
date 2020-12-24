@@ -31,4 +31,5 @@ class RoomInfocratiaGroupsCache(val db: Database): IInfocratiaGroupsCache {
             }
         }
     }
+
 }

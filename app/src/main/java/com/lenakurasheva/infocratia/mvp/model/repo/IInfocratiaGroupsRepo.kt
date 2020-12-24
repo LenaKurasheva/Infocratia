@@ -6,5 +6,5 @@ import io.reactivex.rxjava3.core.Single
 
 interface IInfocratiaGroupsRepo {
     fun getAllGroups(): Single<List<InfocratiaGroup>>
-    fun getGroupsUserSubscribedTo(user: InfocratiaUser): Single<List<InfocratiaGroup>>
+    fun getUserGroups(): Single<List<InfocratiaGroup>>
 }

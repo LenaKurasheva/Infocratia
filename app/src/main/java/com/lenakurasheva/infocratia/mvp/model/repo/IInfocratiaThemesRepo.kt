@@ -6,5 +6,5 @@ import io.reactivex.rxjava3.core.Single
 
 interface IInfocratiaThemesRepo {
     fun getAllThemes(): Single<List<InfocratiaTheme>>
-    fun getThemesUserSubscribedTo(user: InfocratiaUser): Single<List<InfocratiaTheme>>
+    fun getUserThemes(): Single<List<InfocratiaTheme>>
 }

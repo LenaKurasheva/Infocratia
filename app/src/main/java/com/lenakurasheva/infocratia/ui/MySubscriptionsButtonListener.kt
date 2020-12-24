@@ -1,5 +1,5 @@
 package com.lenakurasheva.infocratia.ui
 
 interface MySubscriptionsButtonListener {
-    fun mySubscriptionsPressed(): Boolean
+    fun mySubscriptionsPressed()
 }

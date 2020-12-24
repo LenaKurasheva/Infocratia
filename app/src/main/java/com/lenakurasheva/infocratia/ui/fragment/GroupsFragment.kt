@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lenakurasheva.infocratia.R
 import com.lenakurasheva.infocratia.mvp.presenter.GroupsPresenter
@@ -15,6 +14,8 @@ import com.lenakurasheva.infocratia.ui.MySubscriptionsButtonListener
 import com.lenakurasheva.infocratia.ui.adapter.GroupsRvAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_groups.*
+import kotlinx.android.synthetic.main.fragment_groups.all_tv
+import kotlinx.android.synthetic.main.fragment_groups.subscriptions_tv
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -41,6 +42,8 @@ class GroupsFragment : MvpAppCompatFragment(), GroupsView, BackButtonListener,
     override fun init() {
         rv_groups.layoutManager = LinearLayoutManager(requireContext())
         rv_groups.adapter = adapter
+        subscriptions_tv.setOnClickListener{ mySubscriptionsPressed()}
+        all_tv.setOnClickListener { presenter.loadAllGroups() }
     }
 
     override fun updateGroupsList() {
@@ -58,7 +61,8 @@ class GroupsFragment : MvpAppCompatFragment(), GroupsView, BackButtonListener,
     }
 
     override fun backPressed() = presenter.backClick()
-    override fun mySubscriptionsPressed(): Boolean {
-        TODO("Not yet implemented")
+
+    override fun mySubscriptionsPressed(){
+        presenter.myGroupsButtonPassed()
     }
 }

@@ -21,5 +21,7 @@ class ThemesModule {
 
     @Singleton
     @Provides
-    fun themesRepo(api: IDataSource, networkStatus: INetworkStatus, cache: IInfocratiaThemesCache): IInfocratiaThemesRepo = RetrofitInfocratiaThemesRepo(api, networkStatus, cache)
+    fun themesRepo(api: IDataSource, networkStatus: INetworkStatus, cache: IInfocratiaThemesCache,
+                   headers: HashMap<String, String>, @Named("authToken") authToken: String): IInfocratiaThemesRepo =
+        RetrofitInfocratiaThemesRepo(api, networkStatus, cache, headers, authToken)
 }

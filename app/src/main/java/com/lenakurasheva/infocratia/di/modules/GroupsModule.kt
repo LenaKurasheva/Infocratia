@@ -22,5 +22,7 @@ class GroupsModule {
 
     @Singleton
     @Provides
-    fun groupsRepo(api: IDataSource, networkStatus: INetworkStatus, cache: IInfocratiaGroupsCache): IInfocratiaGroupsRepo = RetrofitInfocratiaGroupsRepo(api, networkStatus, cache)
+    fun groupsRepo(api: IDataSource, networkStatus: INetworkStatus, cache: IInfocratiaGroupsCache,
+                   headers: HashMap<String, String>, @Named("authToken") authToken: String): IInfocratiaGroupsRepo =
+        RetrofitInfocratiaGroupsRepo(api, networkStatus, cache, headers, authToken)
 }

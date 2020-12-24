@@ -9,7 +9,7 @@ import com.lenakurasheva.infocratia.mvp.network.INetworkStatus
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class RetrofitInfocratiaThemesRepo (val api: IDataSource, val networkStatus: INetworkStatus, val cache: IInfocratiaThemesCache):
+class RetrofitInfocratiaThemesRepo (val api: IDataSource, val networkStatus: INetworkStatus, val cache: IInfocratiaThemesCache, val authToken: String):
     IInfocratiaThemesRepo {
 
     override fun getAllThemes() = networkStatus.inOnlineSingle().flatMap { isOnline ->
@@ -24,7 +24,7 @@ class RetrofitInfocratiaThemesRepo (val api: IDataSource, val networkStatus: INe
         }
     }.subscribeOn(Schedulers.io())
 
-    override fun getThemesUserSubscribedTo(user: InfocratiaUser): Single<List<InfocratiaTheme>> {
-        TODO("Not yet implemented")
+    override fun getUserThemes(): Single<List<InfocratiaTheme>> {
+        return api.getUserThemes(authToken)
     }
 }

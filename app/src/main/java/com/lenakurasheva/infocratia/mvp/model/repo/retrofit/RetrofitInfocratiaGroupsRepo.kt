@@ -9,7 +9,7 @@ import com.lenakurasheva.infocratia.mvp.network.INetworkStatus
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class RetrofitInfocratiaGroupsRepo(val api: IDataSource, val networkStatus: INetworkStatus, val cache: IInfocratiaGroupsCache): IInfocratiaGroupsRepo {
+class RetrofitInfocratiaGroupsRepo(val api: IDataSource, val networkStatus: INetworkStatus, val cache: IInfocratiaGroupsCache, val authToken: String): IInfocratiaGroupsRepo {
 
     override fun getAllGroups() = networkStatus.inOnlineSingle().flatMap { isOnline ->
         if (isOnline) {
@@ -23,7 +23,7 @@ class RetrofitInfocratiaGroupsRepo(val api: IDataSource, val networkStatus: INet
         }
     }.subscribeOn(Schedulers.io())
 
-    override fun getGroupsUserSubscribedTo(user: InfocratiaUser): Single<List<InfocratiaGroup>> {
-        TODO("Not yet implemented")
+    override fun getUserGroups(): Single<List<InfocratiaGroup>> {
+       return api.getUserGroups(authToken)
     }
 }
