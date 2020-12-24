@@ -7,4 +7,6 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 interface GroupsView: MvpView {
     fun init()
     fun updateGroupsList()
+    fun signIn()
+    fun signOut()
 }

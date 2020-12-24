@@ -27,24 +27,7 @@ class MainPresenter(): MvpPresenter<MainView>() {
         super.onFirstViewAttach()
         router.replaceScreen(Screens.GroupsScreen())
 
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        isUserAuth()
-
-    };
-
-    fun isUserAuth(){
-        if (auth.accountExists()) {
-            infocratiaUserCache.getUser()
-                .observeOn(uiScheduler)
-                .subscribe { user->
-                    if (user != null && user.email == auth.getAccountEmail()) {
-                        viewState.signIn()
-                    } else { viewState.signOut()}
-                }
-        }
-    }
-
+        };
 
     fun backClick() {
         router.exit()
@@ -62,7 +45,7 @@ class MainPresenter(): MvpPresenter<MainView>() {
     }
 
     fun bottomMenuCabinetClicked(): Boolean {
-        //TODO искать юзера в бд
+        //Find user in db:
         infocratiaUserCache.getUser()
             .observeOn(uiScheduler)
             .subscribe ({ user ->
@@ -76,7 +59,7 @@ class MainPresenter(): MvpPresenter<MainView>() {
     }
 
     fun signOut(){
-        //TODO удалять юзера из бд
+        //Delete user from db:
         infocratiaUserCache.deleteUser()
             .observeOn(uiScheduler)
             .subscribe {
@@ -121,7 +104,7 @@ class MainPresenter(): MvpPresenter<MainView>() {
                         .subscribe { infocratiaResponse ->
                             accessToken = infocratiaResponse.accessToken
                             viewState.signIn()
-                            //TODO сохранить юзера в бд
+                            //Save user to db:
                             infocratiaUserCache.putUser(
                                 InfocratiaUser(
                                     auth.getAccountId(),

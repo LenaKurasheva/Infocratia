@@ -7,4 +7,6 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 interface ThemesView: MvpView {
     fun init()
     fun updateThemesList()
+    fun signIn()
+    fun signOut()
 }

@@ -3,6 +3,7 @@ package com.lenakurasheva.infocratia.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.lenakurasheva.infocratia.R
@@ -11,6 +12,7 @@ import com.lenakurasheva.infocratia.mvp.presenter.MainPresenter
 import com.lenakurasheva.infocratia.mvp.view.MainView
 import com.lenakurasheva.infocratia.ui.App
 import com.lenakurasheva.infocratia.ui.BackButtonListener
+import com.lenakurasheva.infocratia.ui.MySubscriptionsButtonListener
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -86,10 +88,20 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun signOut() {
         bottom_navigation.menu.findItem(R.id.cabinet).setTitle("Войти")
+        supportFragmentManager.fragments.forEach {
+            if (it is MySubscriptionsButtonListener) {
+                findViewById<TextView>(R.id.subscriptions_tv).isEnabled = false
+            }
+        }
     }
 
     override fun signIn(){
         bottom_navigation.menu.findItem(R.id.cabinet).setTitle("Выйти")
+        supportFragmentManager.fragments.forEach {
+            if (it is MySubscriptionsButtonListener) {
+                findViewById<TextView>(R.id.subscriptions_tv).isEnabled = true
+            }
+        }
     }
 
 }

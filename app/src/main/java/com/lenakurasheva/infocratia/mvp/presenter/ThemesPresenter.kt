@@ -1,5 +1,7 @@
 package com.lenakurasheva.infocratia.mvp.presenter
 
+import com.lenakurasheva.infocratia.mvp.model.auth.IAuth
+import com.lenakurasheva.infocratia.mvp.model.cache.IInfocratiaUserCache
 import com.lenakurasheva.infocratia.mvp.model.entity.InfocratiaTheme
 import com.lenakurasheva.infocratia.mvp.model.repo.IInfocratiaThemesRepo
 import com.lenakurasheva.infocratia.mvp.presenter.list.IThemesListPresenter
@@ -19,6 +21,8 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
     lateinit var themesRepoRetrofit: IInfocratiaThemesRepo
     @Inject
     lateinit var uiScheduler: Scheduler
+    @Inject lateinit var infocratiaUserCache: IInfocratiaUserCache
+    @Inject lateinit var auth: IAuth
 
     class ThemesListPresenter : IThemesListPresenter {
         override var itemClickListener: ((ThemeItemView) -> Unit)? = null
@@ -39,12 +43,29 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        // Check is user auth: find user in db + if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        isUserAuth()
         viewState.init()
         loadData()
 
         themesListPresenter.itemClickListener = { view ->
 //            router.navigateTo(Screens.ThemeScreen(themesListPresenter.themes[view.pos]))
         }
+    }
+
+    fun isUserAuth(){
+        if (auth.accountExists()) {
+            infocratiaUserCache.getUser()
+                .observeOn(uiScheduler)
+                .subscribe { user ->
+                    if (user != null && user.email == auth.getAccountEmail()) {
+                        viewState.signIn()
+                    } else {
+                        viewState.signOut()
+                    }
+                }
+        } else viewState.signOut()
     }
 
     fun loadData() {

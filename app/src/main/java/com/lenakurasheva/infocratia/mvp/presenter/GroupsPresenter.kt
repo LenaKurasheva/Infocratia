@@ -1,5 +1,7 @@
 package com.lenakurasheva.infocratia.mvp.presenter
 
+import com.lenakurasheva.infocratia.mvp.model.auth.IAuth
+import com.lenakurasheva.infocratia.mvp.model.cache.IInfocratiaUserCache
 import com.lenakurasheva.infocratia.mvp.model.entity.InfocratiaGroup
 import com.lenakurasheva.infocratia.mvp.model.repo.IInfocratiaGroupsRepo
 import com.lenakurasheva.infocratia.mvp.presenter.list.IGroupsListPresenter
@@ -18,6 +20,8 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
     lateinit var router: Router
     @Inject lateinit var groupsRepoRetrofit: IInfocratiaGroupsRepo
     @Inject lateinit var uiScheduler: Scheduler
+    @Inject lateinit var infocratiaUserCache: IInfocratiaUserCache
+    @Inject lateinit var auth: IAuth
 
     class GroupsListPresenter : IGroupsListPresenter {
         override var itemClickListener: ((GroupItemView) -> Unit)? = null
@@ -38,12 +42,29 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        // Check is user auth: find user in db + if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        isUserAuth()
         viewState.init()
         loadData()
 
         groupsListPresenter.itemClickListener = { view ->
             router.navigateTo(Screens.GroupScreen(groupsListPresenter.groups[view.pos]))
         }
+    }
+
+    fun isUserAuth(){
+        if (auth.accountExists()) {
+            infocratiaUserCache.getUser()
+                .observeOn(uiScheduler)
+                .subscribe { user ->
+                    if (user != null && user.email == auth.getAccountEmail()) {
+                        viewState.signIn()
+                    } else {
+                        viewState.signOut()
+                    }
+                }
+        } else viewState.signOut()
     }
 
     fun loadData() {
