@@ -12,4 +12,7 @@ interface MainView: MvpView{
 
     fun signOut()
     fun signIn()
+
+    fun setGroupsMenuItemChecked()
+    fun setThemesMenuItemChecked()
 }

@@ -12,6 +12,7 @@ import com.lenakurasheva.infocratia.mvp.presenter.GroupPresenter
 import com.lenakurasheva.infocratia.mvp.view.GroupView
 import com.lenakurasheva.infocratia.ui.App
 import com.lenakurasheva.infocratia.ui.BackButtonListener
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_group.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -45,6 +46,15 @@ class GroupFragment: MvpAppCompatFragment(), GroupView, BackButtonListener {
     override fun setCreationDate(creationDate: String) = tv_creation_date.setText(creationDate)
     override fun loadImage(image: String) = imageLoader.loadInto(image, iv_image)
 
-    override fun backPressed() = presenter.backPressed()
+    override fun backPressed() = presenter.backClick()
+
+    override fun setGroupsMenuItemChecked() {
+        activity?.bottom_navigation?.menu?.findItem(R.id.groups)?.isChecked = true
+    }
+
+    override fun setThemesMenuItemChecked() {
+        activity?.bottom_navigation?.menu?.findItem(R.id.themes)?.isChecked = true
+    }
+
 
 }

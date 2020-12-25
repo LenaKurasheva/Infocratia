@@ -110,4 +110,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
     }
 
+    override fun setGroupsMenuItemChecked() {
+        bottom_navigation.menu.findItem(R.id.groups).isChecked = true
+    }
+
+    override fun setThemesMenuItemChecked() {
+        bottom_navigation.menu.findItem(R.id.themes).isChecked = true
+    }
+
 }

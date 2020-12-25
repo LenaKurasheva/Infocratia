@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.Provides
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
+import java.util.*
+import javax.inject.Singleton
 
 @Module
 class NavigationModule {
@@ -17,4 +19,8 @@ class NavigationModule {
 
     @Provides
     fun router() = cicerone.router
+
+    @Singleton
+    @Provides
+    fun backStack(): Stack<String> = Stack()
 }

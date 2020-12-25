@@ -8,16 +8,20 @@ import com.lenakurasheva.infocratia.mvp.presenter.list.IGroupsListPresenter
 import com.lenakurasheva.infocratia.mvp.view.GroupsView
 import com.lenakurasheva.infocratia.mvp.view.list.GroupItemView
 import com.lenakurasheva.infocratia.navigation.Screens
+import com.lenakurasheva.infocratia.ui.fragment.GroupFragment
+import com.lenakurasheva.infocratia.ui.fragment.GroupsFragment
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import java.util.*
 import javax.inject.Inject
 
 class GroupsPresenter(): MvpPresenter<GroupsView>() {
 
-    @Inject
-    lateinit var router: Router
+    @Inject lateinit var router: Router
+    @Inject lateinit var backStack: Stack<String>
+
     @Inject lateinit var groupsRepoRetrofit: IInfocratiaGroupsRepo
     @Inject lateinit var uiScheduler: Scheduler
     @Inject lateinit var infocratiaUserCache: IInfocratiaUserCache
@@ -50,6 +54,8 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
 
         groupsListPresenter.itemClickListener = { view ->
             router.navigateTo(Screens.GroupScreen(groupsListPresenter.groups[view.pos]))
+            backStack.addElement(GroupFragment::class.java.simpleName)
+
         }
     }
 
@@ -83,6 +89,13 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
     }
 
     fun backClick(): Boolean {
+        if(backStack.size > 1) {
+            backStack.pop()
+            val currFragmentName: String = backStack.peek()
+            if (currFragmentName == "GroupsFragment") viewState.setGroupsMenuItemChecked()
+            if (currFragmentName == "ThemesFragment") viewState.setThemesMenuItemChecked()
+            if (currFragmentName == "GroupFragment") viewState.setGroupsMenuItemChecked()
+        }
         router.exit()
         return true
     }
