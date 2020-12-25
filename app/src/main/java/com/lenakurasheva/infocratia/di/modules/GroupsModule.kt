@@ -20,9 +20,8 @@ class GroupsModule {
     @Provides
     fun groupsCache(database: Database): IInfocratiaGroupsCache = RoomInfocratiaGroupsCache(database)
 
-    @Singleton
     @Provides
     fun groupsRepo(api: IDataSource, networkStatus: INetworkStatus, cache: IInfocratiaGroupsCache,
-                   headers: HashMap<String, String>, @Named("authToken") authToken: String): IInfocratiaGroupsRepo =
-        RetrofitInfocratiaGroupsRepo(api, networkStatus, cache, headers, authToken)
+                   @Named("authToken") authToken: String): IInfocratiaGroupsRepo =
+        RetrofitInfocratiaGroupsRepo(api, networkStatus, cache, authToken)
 }

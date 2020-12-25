@@ -76,6 +76,8 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
                     groupsListPresenter.groups.clear()
                     groupsListPresenter.groups.addAll(it)
                     viewState.updateGroupsList()
+                    viewState.allGroupsPressed()
+                    if(auth.accountExists())viewState.myGroupsIsNotPressed()
                 },
                 { println("onError: ${it.message}") }))
     }
@@ -90,7 +92,7 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
         disposables.dispose()
     }
 
-    fun myGroupsButtonPassed() {
+    fun myGroupsButtonPressed() {
         disposables.add(groupsRepoRetrofit.getUserGroups()
             .retry(3)
             .observeOn(uiScheduler)
@@ -99,6 +101,8 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
                     groupsListPresenter.groups.clear()
                     groupsListPresenter.groups.addAll(it)
                     viewState.updateGroupsList()
+                    viewState.myGroupsPressed()
+                    viewState.allGroupsIsNotPressed()
                 },
                 { println("onError: ${it.message}") }))    }
 

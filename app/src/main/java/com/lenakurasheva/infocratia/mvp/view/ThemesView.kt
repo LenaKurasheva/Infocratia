@@ -9,4 +9,8 @@ interface ThemesView: MvpView {
     fun updateThemesList()
     fun signIn()
     fun signOut()
+    fun allThemesPressed()
+    fun myThemesPressed()
+    fun myThemesIsNotPressed()
+    fun allThemesIsNotPressed()
 }

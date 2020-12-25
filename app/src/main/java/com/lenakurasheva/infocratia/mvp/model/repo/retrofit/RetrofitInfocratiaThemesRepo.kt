@@ -25,6 +25,7 @@ class RetrofitInfocratiaThemesRepo (val api: IDataSource, val networkStatus: INe
     }.subscribeOn(Schedulers.io())
 
     override fun getUserThemes(): Single<List<InfocratiaTheme>> {
-        return api.getUserThemes(authToken)
+        //Here will be userThemesCache, backend is in dev (now api themes response doesn't include userId)
+        return api.getUserThemes(authToken).subscribeOn(Schedulers.io())
     }
 }

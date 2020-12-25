@@ -46,7 +46,6 @@ class AuthModule {
     fun clientSecret() = "TbKnzuLs5pwnA3R5pJuQSytw"
 
     @Named("authToken")
-    @Singleton
     @Provides
     fun authToken(infocratiaUserCache: IInfocratiaUserCache): String =
     try {"Bearer " +
@@ -57,7 +56,6 @@ class AuthModule {
         e.printStackTrace()
         ""
     }
-
 
     @Provides
     fun  googleSignInOptions(@Named("serverClientId") serverClientId: String):  GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

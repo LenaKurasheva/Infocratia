@@ -87,19 +87,25 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun signOut() {
-        bottom_navigation.menu.findItem(R.id.cabinet).setTitle("Войти")
+        bottom_navigation.menu.findItem(R.id.cabinet).setTitle(getString(R.string.enter))
         supportFragmentManager.fragments.forEach {
             if (it is MySubscriptionsButtonListener) {
                 findViewById<TextView>(R.id.subscriptions_tv).isEnabled = false
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    findViewById<TextView>(R.id.subscriptions_tv).setTextColor(resources.getColor(R.color.common_google_signin_btn_text_dark_disabled, null))
+                }
             }
         }
     }
 
     override fun signIn(){
-        bottom_navigation.menu.findItem(R.id.cabinet).setTitle("Выйти")
+        bottom_navigation.menu.findItem(R.id.cabinet).setTitle(getString(R.string.exit))
         supportFragmentManager.fragments.forEach {
             if (it is MySubscriptionsButtonListener) {
                 findViewById<TextView>(R.id.subscriptions_tv).isEnabled = true
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    findViewById<TextView>(R.id.subscriptions_tv).setTextColor(resources.getColor(android.R.color.tab_indicator_text, null))
+                }
             }
         }
     }

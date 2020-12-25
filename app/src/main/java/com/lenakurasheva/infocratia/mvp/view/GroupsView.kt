@@ -9,4 +9,8 @@ interface GroupsView: MvpView {
     fun updateGroupsList()
     fun signIn()
     fun signOut()
+    fun allGroupsPressed()
+    fun myGroupsPressed()
+    fun myGroupsIsNotPressed()
+    fun allGroupsIsNotPressed()
 }

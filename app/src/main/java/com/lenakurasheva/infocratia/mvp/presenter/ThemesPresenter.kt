@@ -77,6 +77,8 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
                     themesListPresenter.themes.clear()
                     themesListPresenter.themes.addAll(it)
                     viewState.updateThemesList()
+                    viewState.allThemesPressed()
+                    if(auth.accountExists()) viewState.myThemesIsNotPressed()
                 },
                 { println("onError: ${it.message}") }))
     }
@@ -99,6 +101,9 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
                 {themesListPresenter.themes.clear()
                 themesListPresenter.themes.addAll(it)
                 viewState.updateThemesList()
+                viewState.myThemesPressed()
+                viewState.allThemesIsNotPressed()
+
                 },
                 { println("onError: ${it.message}") }))
 

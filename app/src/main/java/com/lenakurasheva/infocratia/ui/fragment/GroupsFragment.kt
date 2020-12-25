@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_groups.*
 import kotlinx.android.synthetic.main.fragment_groups.all_tv
 import kotlinx.android.synthetic.main.fragment_groups.subscriptions_tv
+import kotlinx.android.synthetic.main.fragment_themes.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -58,11 +59,36 @@ class GroupsFragment : MvpAppCompatFragment(), GroupsView, BackButtonListener,
     override fun signOut() {
         activity?.bottom_navigation?.menu?.findItem(R.id.cabinet)?.title = "Войти"
         subscriptions_tv.isEnabled = false
+        subscriptions_tv.setTextColor(resources.getColor(R.color.common_google_signin_btn_text_dark_disabled))
+
+    }
+
+    override fun allGroupsPressed() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            all_tv.setTextColor(resources.getColor(R.color.purple_500, null))
+        }
+    }
+
+    override fun myGroupsPressed() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            subscriptions_tv.setTextColor(resources.getColor(R.color.purple_500, null))
+        }
+    }
+
+    override fun myGroupsIsNotPressed() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            subscriptions_tv.setTextColor(resources.getColor(android.R.color.tab_indicator_text, null))
+        }
+    }
+
+    override fun allGroupsIsNotPressed() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            all_tv.setTextColor(resources.getColor(android.R.color.tab_indicator_text, null))
+        }
     }
 
     override fun backPressed() = presenter.backClick()
 
     override fun mySubscriptionsPressed(){
-        presenter.myGroupsButtonPassed()
-    }
+        presenter.myGroupsButtonPressed()    }
 }

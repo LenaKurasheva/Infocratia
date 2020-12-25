@@ -5,4 +5,6 @@
     <string name="groups">Группы</string>
     <string name="themes">Темы</string>
     <string name="cabinet">Кабинет</string>
+    <string name="enter">Войти</string>
+    <string name="exit">Выйти</string>
 </resources>

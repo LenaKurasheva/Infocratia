@@ -24,6 +24,7 @@ class RetrofitInfocratiaGroupsRepo(val api: IDataSource, val networkStatus: INet
     }.subscribeOn(Schedulers.io())
 
     override fun getUserGroups(): Single<List<InfocratiaGroup>> {
-       return api.getUserGroups(authToken)
+        //Here will be userGroupsCache, backend is in dev (now api groups response doesn't include userId)
+        return api.getUserGroups(authToken).subscribeOn(Schedulers.io())
     }
 }

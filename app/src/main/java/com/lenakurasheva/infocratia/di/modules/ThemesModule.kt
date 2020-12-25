@@ -19,9 +19,8 @@ class ThemesModule {
     @Provides
     fun themesCache(database: Database): IInfocratiaThemesCache = RoomInfocratiaThemesCache(database)
 
-    @Singleton
     @Provides
     fun themesRepo(api: IDataSource, networkStatus: INetworkStatus, cache: IInfocratiaThemesCache,
-                   headers: HashMap<String, String>, @Named("authToken") authToken: String): IInfocratiaThemesRepo =
-        RetrofitInfocratiaThemesRepo(api, networkStatus, cache, headers, authToken)
+                   @Named("authToken") authToken: String): IInfocratiaThemesRepo =
+        RetrofitInfocratiaThemesRepo(api, networkStatus, cache, authToken)
 }
