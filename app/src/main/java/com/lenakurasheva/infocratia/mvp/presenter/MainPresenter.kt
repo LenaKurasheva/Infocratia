@@ -35,12 +35,12 @@ class MainPresenter(): MvpPresenter<MainView>() {
 
     fun bottomMenuGroupsClicked(): Boolean {
         print("bottomMenuGroupsClicked")
-        router.replaceScreen(Screens.GroupsScreen())
+        router.navigateTo(Screens.GroupsScreen())
         return true
     }
 
     fun bottomMenuThemesClicked(): Boolean {
-        router.replaceScreen(Screens.ThemesScreen())
+        router.navigateTo(Screens.ThemesScreen())
         return true
     }
 
