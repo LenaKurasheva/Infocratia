@@ -1,5 +1,6 @@
 package com.lenakurasheva.infocratia.mvp.presenter
 
+import com.lenakurasheva.infocratia.di.themes.IThemesScopeContainer
 import com.lenakurasheva.infocratia.mvp.model.auth.IAuth
 import com.lenakurasheva.infocratia.mvp.model.cache.IInfocratiaUserCache
 import com.lenakurasheva.infocratia.mvp.model.entity.InfocratiaTheme
@@ -26,6 +27,8 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
     lateinit var uiScheduler: Scheduler
     @Inject lateinit var infocratiaUserCache: IInfocratiaUserCache
     @Inject lateinit var auth: IAuth
+
+    @Inject lateinit var scope: IThemesScopeContainer
 
     class ThemesListPresenter : IThemesListPresenter {
         override var itemClickListener: ((ThemeItemView) -> Unit)? = null
@@ -102,6 +105,7 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.dispose()
+        scope.releaseThemesScope()
     }
 
     fun myThemesButtonPassed() {

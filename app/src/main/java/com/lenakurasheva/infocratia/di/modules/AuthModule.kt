@@ -5,6 +5,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.gson.Gson
+import com.lenakurasheva.infocratia.R
 import com.lenakurasheva.infocratia.mvp.model.api.IDataSource
 import com.lenakurasheva.infocratia.mvp.model.api.IGoogleAuth
 import com.lenakurasheva.infocratia.mvp.model.auth.IAuth
@@ -37,13 +38,13 @@ class AuthModule {
     @Named("serverClientId")
     @Singleton
     @Provides
-    fun serverClientId() =
-        "123473994034-9r6dr52ce9a012n07d4i7at5mk8k1uq2.apps.googleusercontent.com" // application type:: web application
+    fun serverClientId(app: App) =
+        app.getString(R.string.my_client_id) // application type:: web application
 
     @Named("clientSecret")
     @Singleton
     @Provides
-    fun clientSecret() = "TbKnzuLs5pwnA3R5pJuQSytw"
+    fun clientSecret(app: App) = app.getString(R.string.my_client_secret)
 
     @Named("authToken")
     @Provides

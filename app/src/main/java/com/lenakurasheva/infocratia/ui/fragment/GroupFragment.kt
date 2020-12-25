@@ -32,18 +32,18 @@ class GroupFragment: MvpAppCompatFragment(), GroupView, BackButtonListener {
 
     val presenter: GroupPresenter by moxyPresenter {
         val group = arguments?.getParcelable<InfocratiaGroup>("group") as InfocratiaGroup
-        GroupPresenter(group).apply { App.instance.appComponent?.inject(this) }
+        GroupPresenter(group).apply { App.instance.groupsSubcomponent?.inject(this) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         View.inflate(context, R.layout.fragment_group, null)
 
     override fun init() {
-        App.instance.appComponent.inject(this)
+        App.instance.groupsSubcomponent?.inject(this)
     }
-    override fun setName(name: String) = tv_name.setText(name)
-    override fun setAbout(about: String) = tv_about.setText(about)
-    override fun setCreationDate(creationDate: String) = tv_creation_date.setText(creationDate)
+    override fun setName(name: String) { tv_name.text = name }
+    override fun setAbout(about: String) { tv_about.text = about }
+    override fun setCreationDate(creationDate: String) { tv_creation_date.text = creationDate }
     override fun loadImage(image: String) = imageLoader.loadInto(image, iv_image)
 
     override fun backPressed() = presenter.backClick()

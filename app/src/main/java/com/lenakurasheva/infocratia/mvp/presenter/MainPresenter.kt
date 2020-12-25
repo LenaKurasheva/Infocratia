@@ -1,11 +1,13 @@
 package com.lenakurasheva.infocratia.mvp.presenter
 
+import com.lenakurasheva.infocratia.R
 import com.lenakurasheva.infocratia.mvp.model.auth.IAuth
 import com.lenakurasheva.infocratia.mvp.model.cache.IInfocratiaUserCache
 import com.lenakurasheva.infocratia.mvp.model.entity.InfocratiaUser
 import com.lenakurasheva.infocratia.mvp.model.repo.IInfocratiaAuthRepo
 import com.lenakurasheva.infocratia.mvp.view.MainView
 import com.lenakurasheva.infocratia.navigation.Screens
+import com.lenakurasheva.infocratia.ui.App
 import com.lenakurasheva.infocratia.ui.fragment.GroupsFragment
 import com.lenakurasheva.infocratia.ui.fragment.ThemesFragment
 import io.reactivex.rxjava3.core.Scheduler
@@ -18,6 +20,8 @@ import kotlin.collections.HashMap
 
 
 class MainPresenter(): MvpPresenter<MainView>() {
+
+    @Inject lateinit var app: App
 
     @Inject lateinit var router: Router
     @Inject lateinit var backStack: Stack<String>
@@ -33,9 +37,7 @@ class MainPresenter(): MvpPresenter<MainView>() {
         super.onFirstViewAttach()
         router.replaceScreen(Screens.GroupsScreen())
         backStack.addElement(GroupsFragment::class.java.simpleName)
-
-
-    };
+    }
 
     fun backClick() {
         if(backStack.size > 1) {
@@ -87,25 +89,22 @@ class MainPresenter(): MvpPresenter<MainView>() {
 
     fun getAccessToken(authCode: String?, idToken: String?) {
         if (authCode != null && idToken != null) {
-            var accessToken: String? = null
+            var accessToken: String?
 
             val googleParams = HashMap<String?, String?>()
-            googleParams.put("grant_type", "authorization_code")
-            googleParams.put("client_id", auth.getServerClientId())
-            googleParams.put("client_secret", auth.getClientSecret())
-            googleParams.put("redirect_uri", "")
-            googleParams.put("code", authCode)
-            googleParams.put("id_token", idToken)
-            googleParams.put("access_type", "offline")
+            googleParams["grant_type"] = "authorization_code"
+            googleParams["client_id"] = auth.getServerClientId()
+            googleParams["client_secret"] = auth.getClientSecret()
+            googleParams["redirect_uri"] = ""
+            googleParams["code"] = authCode
+            googleParams["id_token"] = idToken
+            googleParams["access_type"] = "offline"
 
             val infocratiaParams = HashMap<String?, String?>()
-            infocratiaParams.put("grant_type", "convert_token")
-            infocratiaParams.put("client_id", "ojqYNyT3fgnbnfLJYODmM9vTZmyeB1e4rbAckq6N")
-            infocratiaParams.put(
-                "client_secret",
-                "qHUBShaSgGxOnF9z0wqLCwgVctyHwDgjAzQBH03cTYcsbGKsAp3k7wOKO0gTGlEGgoR44tcy7R0wbz9CrZitdhbxqXx99WnA1LEkemsIBsuSKCJ3w6IkKopA1Wlnp1EH"
-            )
-            infocratiaParams.put("backend", "google-oauth2")
+            infocratiaParams["grant_type"] = "convert_token"
+            infocratiaParams["client_id"] = app.getString(R.string.backend_client_id)
+            infocratiaParams["client_secret"] = app.getString(R.string.backend_client_secret)
+            infocratiaParams["backend"] = "google-oauth2"
 
             print(authCode)
             print(idToken)

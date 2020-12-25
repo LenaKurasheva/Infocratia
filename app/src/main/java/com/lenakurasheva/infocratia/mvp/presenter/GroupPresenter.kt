@@ -1,5 +1,6 @@
 package com.lenakurasheva.infocratia.mvp.presenter
 
+import com.lenakurasheva.infocratia.di.groups.IGroupsScopeContainer
 import com.lenakurasheva.infocratia.mvp.model.entity.InfocratiaGroup
 import com.lenakurasheva.infocratia.mvp.view.GroupView
 import moxy.MvpPresenter

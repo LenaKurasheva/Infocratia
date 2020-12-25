@@ -1,5 +1,6 @@
 package com.lenakurasheva.infocratia.mvp.presenter
 
+import com.lenakurasheva.infocratia.di.groups.IGroupsScopeContainer
 import com.lenakurasheva.infocratia.mvp.model.auth.IAuth
 import com.lenakurasheva.infocratia.mvp.model.cache.IInfocratiaUserCache
 import com.lenakurasheva.infocratia.mvp.model.entity.InfocratiaGroup
@@ -9,7 +10,6 @@ import com.lenakurasheva.infocratia.mvp.view.GroupsView
 import com.lenakurasheva.infocratia.mvp.view.list.GroupItemView
 import com.lenakurasheva.infocratia.navigation.Screens
 import com.lenakurasheva.infocratia.ui.fragment.GroupFragment
-import com.lenakurasheva.infocratia.ui.fragment.GroupsFragment
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
@@ -26,6 +26,8 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
     @Inject lateinit var uiScheduler: Scheduler
     @Inject lateinit var infocratiaUserCache: IInfocratiaUserCache
     @Inject lateinit var auth: IAuth
+
+    @Inject lateinit var scope: IGroupsScopeContainer
 
     class GroupsListPresenter : IGroupsListPresenter {
         override var itemClickListener: ((GroupItemView) -> Unit)? = null
@@ -103,6 +105,7 @@ class GroupsPresenter(): MvpPresenter<GroupsView>() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.dispose()
+        scope.releaseGroupsScope()
     }
 
     fun myGroupsButtonPressed() {

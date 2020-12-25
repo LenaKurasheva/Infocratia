@@ -7,4 +7,8 @@
     <string name="cabinet">Кабинет</string>
     <string name="enter">Войти</string>
     <string name="exit">Выйти</string>
+    <string name="backend_client_id">ojqYNyT3fgnbnfLJYODmM9vTZmyeB1e4rbAckq6N</string>
+    <string name="backend_client_secret">qHUBShaSgGxOnF9z0wqLCwgVctyHwDgjAzQBH03cTYcsbGKsAp3k7wOKO0gTGlEGgoR44tcy7R0wbz9CrZitdhbxqXx99WnA1LEkemsIBsuSKCJ3w6IkKopA1Wlnp1EH</string>
+    <string name="my_client_id">123473994034-9r6dr52ce9a012n07d4i7at5mk8k1uq2.apps.googleusercontent.com</string>
+    <string name="my_client_secret">TbKnzuLs5pwnA3R5pJuQSytw</string>
 </resources>

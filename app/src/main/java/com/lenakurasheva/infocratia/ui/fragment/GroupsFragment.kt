@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_groups.*
 import kotlinx.android.synthetic.main.fragment_groups.all_tv
 import kotlinx.android.synthetic.main.fragment_groups.subscriptions_tv
-import kotlinx.android.synthetic.main.fragment_themes.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -28,13 +27,14 @@ class GroupsFragment : MvpAppCompatFragment(), GroupsView, BackButtonListener,
     }
 
     val presenter by moxyPresenter {
+        App.instance.initGroupsComponent()
         GroupsPresenter().apply {
-            App.instance.appComponent?.inject(this)
+            App.instance.groupsSubcomponent?.inject(this)
         }
     }
 
     val adapter by lazy {
-        GroupsRvAdapter(presenter.groupsListPresenter).apply { App.instance.appComponent?.inject(this)}
+        GroupsRvAdapter(presenter.groupsListPresenter).apply { App.instance.groupsSubcomponent?.inject(this)}
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
@@ -59,7 +59,9 @@ class GroupsFragment : MvpAppCompatFragment(), GroupsView, BackButtonListener,
     override fun signOut() {
         activity?.bottom_navigation?.menu?.findItem(R.id.cabinet)?.title = "Войти"
         subscriptions_tv.isEnabled = false
-        subscriptions_tv.setTextColor(resources.getColor(R.color.common_google_signin_btn_text_dark_disabled))
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            subscriptions_tv.setTextColor(resources.getColor(R.color.common_google_signin_btn_text_dark_disabled, null))
+        }
 
     }
 
