@@ -8,58 +8,46 @@ import com.lenakurasheva.infocratia.mvp.model.repo.IInfocratiaAuthRepo
 import com.lenakurasheva.infocratia.mvp.view.MainView
 import com.lenakurasheva.infocratia.navigation.Screens
 import com.lenakurasheva.infocratia.ui.App
-import com.lenakurasheva.infocratia.ui.fragment.GroupsFragment
-import com.lenakurasheva.infocratia.ui.fragment.ThemesFragment
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.HashMap
 
 
-class MainPresenter(): MvpPresenter<MainView>() {
+class MainPresenter: MvpPresenter<MainView>() {
 
     @Inject lateinit var app: App
 
     @Inject lateinit var router: Router
-    @Inject lateinit var backStack: Stack<String>
 
     @Inject lateinit var uiScheduler: Scheduler
     @Inject lateinit var infocratiaUserCache: IInfocratiaUserCache
     @Inject lateinit var auth: IAuth
     @Inject lateinit var authRepo: IInfocratiaAuthRepo
 
+    val primaryScreen = Screens.GroupsScreen()
+
 
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        router.replaceScreen(Screens.GroupsScreen())
-        backStack.addElement(GroupsFragment::class.java.simpleName)
+        router.replaceScreen(primaryScreen)
     }
 
     fun backClick() {
-        if(backStack.size > 1) {
-            backStack.pop()
-            val currFragmentName: String = backStack.peek()
-            if (currFragmentName == "GroupsFragment") viewState.setGroupsMenuItemChecked()
-            if (currFragmentName == "ThemesFragment") viewState.setThemesMenuItemChecked()
-            if (currFragmentName == "GroupFragment") viewState.setGroupsMenuItemChecked()
-        }
         router.exit()
     }
 
     fun bottomMenuGroupsClicked(): Boolean {
         print("bottomMenuGroupsClicked")
         router.navigateTo(Screens.GroupsScreen())
-        backStack.addElement(GroupsFragment::class.java.simpleName)
         return true
     }
 
     fun bottomMenuThemesClicked(): Boolean {
         router.navigateTo(Screens.ThemesScreen())
-        backStack.addElement(ThemesFragment::class.java.simpleName)
         return true
     }
 
@@ -135,7 +123,10 @@ class MainPresenter(): MvpPresenter<MainView>() {
         }
     }
 
-
-
+    fun checkCurrentBottomMenuItem(currentScreenName: String) {
+        println("CURRENT SCREEN: $currentScreenName")
+        if (currentScreenName.contains("GroupsScreen")) viewState.setGroupsMenuItemChecked()
+        if (currentScreenName.contains("ThemesScreen")) viewState.setThemesMenuItemChecked()
+    }
 
 }

@@ -14,7 +14,4 @@ interface GroupsView: MvpView {
     fun myGroupsIsNotPressed()
     fun allGroupsIsNotPressed()
 
-    fun setGroupsMenuItemChecked()
-    fun setThemesMenuItemChecked()
-
 }

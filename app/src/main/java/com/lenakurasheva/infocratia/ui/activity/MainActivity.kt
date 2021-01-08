@@ -18,6 +18,10 @@ import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import ru.terrakok.cicerone.commands.Back
+import ru.terrakok.cicerone.commands.Command
+import ru.terrakok.cicerone.commands.Forward
+import ru.terrakok.cicerone.commands.Replace
 import javax.inject.Inject
 
 
@@ -26,7 +30,32 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     @Inject lateinit var navigatorHolder: NavigatorHolder
     @Inject lateinit var androidAuth: IAuth
 
-    val navigator = SupportAppNavigator(this, supportFragmentManager, R.id.container)
+
+    val navigator = object : SupportAppNavigator(this, supportFragmentManager, R.id.container){
+        override fun applyCommands(commands: Array<out Command>) {
+            presenter.checkCurrentBottomMenuItem(getCurrentScreenName(commands))
+            super.applyCommands(commands)
+        }
+    }
+
+    fun getCurrentScreenName(commands: Array<out Command>): String {
+        var currentScreenName = ""
+        when (val lastCommand: Command = commands[commands.size - 1]){
+                is Replace -> currentScreenName = lastCommand.screen.screenKey
+                is Forward -> currentScreenName = lastCommand.screen.screenKey
+                is Back -> currentScreenName = getPreviousFragmentName() ?: ""
+            }
+        return currentScreenName
+    }
+
+    private fun getPreviousFragmentName(): String? {
+        return when (supportFragmentManager.backStackEntryCount){
+            0 -> null
+            1 -> presenter.primaryScreen.toString()
+            else -> supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 2).name
+        }
+    }
+
 
     val presenter by moxyPresenter {
         App.instance.appComponent.inject(this)
@@ -38,7 +67,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.instance.appComponent.inject(this)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -74,7 +102,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == androidAuth.requestCodeSignIn()) {
             androidAuth.getGoogleSignInAccount(data)
             presenter.getAccessToken(androidAuth.getAuthCode(), androidAuth.getIdToken())
@@ -82,8 +110,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun openSignInIntent() {
-        val signInIntent: Intent =  (androidAuth.googleSignInClient() as GoogleSignInClient).getSignInIntent()
-        this.startActivityForResult(signInIntent,  androidAuth.requestCodeSignIn())
+        val signInIntent: Intent =  (androidAuth.googleSignInClient() as GoogleSignInClient).signInIntent
+        this.startActivityForResult(signInIntent, androidAuth.requestCodeSignIn())
     }
 
     override fun signOut() {
@@ -99,7 +127,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun signIn(){
-        bottom_navigation.menu.findItem(R.id.cabinet).setTitle(getString(R.string.exit))
+        bottom_navigation.menu.findItem(R.id.cabinet).title = getString(R.string.exit)
         supportFragmentManager.fragments.forEach {
             if (it is MySubscriptionsButtonListener) {
                 findViewById<TextView>(R.id.subscriptions_tv).isEnabled = true

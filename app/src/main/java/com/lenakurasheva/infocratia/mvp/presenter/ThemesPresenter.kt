@@ -8,18 +8,15 @@ import com.lenakurasheva.infocratia.mvp.model.repo.IInfocratiaThemesRepo
 import com.lenakurasheva.infocratia.mvp.presenter.list.IThemesListPresenter
 import com.lenakurasheva.infocratia.mvp.view.ThemesView
 import com.lenakurasheva.infocratia.mvp.view.list.ThemeItemView
-import com.lenakurasheva.infocratia.ui.fragment.ThemesFragment
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import java.util.*
 import javax.inject.Inject
 
 class ThemesPresenter : MvpPresenter<ThemesView>() {
 
     @Inject lateinit var router: Router
-    @Inject lateinit var backStack: Stack<String>
 
     @Inject
     lateinit var themesRepoRetrofit: IInfocratiaThemesRepo
@@ -56,11 +53,10 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
         loadAllThemes()
 
         themesListPresenter.itemClickListener = { view ->
-//            router.navigateTo(Screens.ThemeScreen(themesListPresenter.themes[view.pos]))
         }
     }
 
-    fun isUserAuth(){
+    private fun isUserAuth(){
         if (auth.accountExists()) {
             infocratiaUserCache.getUser()
                 .observeOn(uiScheduler)
@@ -91,13 +87,6 @@ class ThemesPresenter : MvpPresenter<ThemesView>() {
     }
 
     fun backClick(): Boolean {
-        if(backStack.size > 1) {
-            backStack.pop()
-            val currFragmentName: String = backStack.peek()
-            if (currFragmentName == "GroupsFragment") viewState.setGroupsMenuItemChecked()
-            if (currFragmentName == "ThemesFragment") viewState.setThemesMenuItemChecked()
-            if (currFragmentName == "GroupFragment") viewState.setGroupsMenuItemChecked()
-        }
         router.exit()
         return true
     }

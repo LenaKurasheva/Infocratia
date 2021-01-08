@@ -10,7 +10,4 @@ interface GroupView: MvpView {
     fun setAbout(about: String)
     fun setCreationDate(creationDate: String)
     fun loadImage(image: String)
-
-    fun setGroupsMenuItemChecked()
-    fun setThemesMenuItemChecked()
 }

@@ -48,13 +48,4 @@ class GroupFragment: MvpAppCompatFragment(), GroupView, BackButtonListener {
 
     override fun backPressed() = presenter.backClick()
 
-    override fun setGroupsMenuItemChecked() {
-        activity?.bottom_navigation?.menu?.findItem(R.id.groups)?.isChecked = true
-    }
-
-    override fun setThemesMenuItemChecked() {
-        activity?.bottom_navigation?.menu?.findItem(R.id.themes)?.isChecked = true
-    }
-
-
 }

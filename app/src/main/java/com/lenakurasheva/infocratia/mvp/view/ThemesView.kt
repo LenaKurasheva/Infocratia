@@ -13,7 +13,4 @@ interface ThemesView: MvpView {
     fun myThemesPressed()
     fun myThemesIsNotPressed()
     fun allThemesIsNotPressed()
-
-    fun setGroupsMenuItemChecked()
-    fun setThemesMenuItemChecked()
 }
