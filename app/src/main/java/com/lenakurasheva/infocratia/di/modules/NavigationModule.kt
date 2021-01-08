@@ -19,8 +19,5 @@ class NavigationModule {
 
     @Provides
     fun router() = cicerone.router
-
-    @Singleton
-    @Provides
-    fun backStack(): Stack<String> = Stack()
+    
 }
