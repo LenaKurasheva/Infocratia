@@ -46,6 +46,17 @@ class AuthModule {
     @Provides
     fun clientSecret(app: App) = app.getString(R.string.my_client_secret)
 
+    @Named("backendClientId")
+    @Singleton
+    @Provides
+    fun backendClientId(app: App) =
+            app.getString(R.string.backend_client_id)
+
+    @Named("backendClientSecret")
+    @Singleton
+    @Provides
+    fun backendClientSecret(app: App) = app.getString(R.string.backend_client_secret)
+
     @Named("authToken")
     @Provides
     fun authToken(infocratiaUserCache: IInfocratiaUserCache): String =
@@ -74,7 +85,7 @@ class AuthModule {
 
     @Singleton
     @Provides
-    fun authRepo(api: IDataSource, googleAuthApi: IGoogleAuth): IInfocratiaAuthRepo = RetrofitInfocratiaAuthRepo(api, googleAuthApi)
+    fun authRepo(api: IDataSource, googleAuthApi: IGoogleAuth, auth: IAuth): IInfocratiaAuthRepo = RetrofitInfocratiaAuthRepo(api, googleAuthApi, auth)
 
     @Named("googleAuthUrl")
     @Provides
@@ -98,7 +109,9 @@ class AuthModule {
     @Provides
     fun auth(@Named("serverClientId") serverClientId: String,
              @Named("clientSecret") clientSecret: String,
+             @Named("backendClientId") backendClientId: String,
+             @Named("backendClientSecret") backendClientSecret: String,
              @Named("requestCodeSignIn") requestCodeSignIn: Int,
              account: GoogleSignInAccount?,
-             googleSignInClient: GoogleSignInClient): IAuth = AndroidAuth(serverClientId, clientSecret, requestCodeSignIn, account, googleSignInClient)
+             googleSignInClient: GoogleSignInClient): IAuth = AndroidAuth(serverClientId, clientSecret, backendClientId, backendClientSecret, requestCodeSignIn, account, googleSignInClient)
 }

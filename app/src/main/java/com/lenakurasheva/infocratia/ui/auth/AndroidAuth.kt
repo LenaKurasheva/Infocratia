@@ -7,7 +7,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.lenakurasheva.infocratia.mvp.model.auth.IAuth
 
-class AndroidAuth(val serverClId: String, val clSecret: String, val requestCodeSignIn: Int, var account: GoogleSignInAccount?, var googleSignInClient: GoogleSignInClient,
+class AndroidAuth(val serverClId: String, val clSecret: String,
+                  val backendClId: String, val backendClSecret: String,
+                  val requestCodeSignIn: Int, var account: GoogleSignInAccount?,
+                  var googleSignInClient: GoogleSignInClient,
 ) : IAuth{
 
     override fun getGoogleSignInAccount(data: Any?) {
@@ -49,8 +52,8 @@ class AndroidAuth(val serverClId: String, val clSecret: String, val requestCodeS
         }
 
     override fun getServerClientId(): String = serverClId
-
     override fun getClientSecret(): String = clSecret
-
+    override fun getBackendClientSecret(): String = backendClSecret
+    override fun getBackendClientId(): String = backendClId
 
 }

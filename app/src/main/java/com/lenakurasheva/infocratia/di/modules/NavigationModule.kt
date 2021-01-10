@@ -19,5 +19,5 @@ class NavigationModule {
 
     @Provides
     fun router() = cicerone.router
-    
+
 }

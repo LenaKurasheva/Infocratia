@@ -6,6 +6,8 @@ import io.reactivex.rxjava3.core.Single
 
 interface IInfocratiaAuthRepo {
     fun getGoogleAccessToken(params: HashMap<String?, String?>): Single<GoogleAuthResponse>
-//    fun postAccessToken(params: HashMap<String?, String?>): Single<Any>
+
     fun getInfocratiaAccessToken(params: HashMap<String?, String?>): Single<InfocratiaAuthResponse>
+
+    fun getAccessToken(authCode: String?, idToken: String?): Single<InfocratiaAuthResponse>
 }

@@ -25,7 +25,7 @@ class RoomInfocratiaUserCache(val db: Database): IInfocratiaUserCache {
         var roomUser: RoomInfocratiaUser? = null
         return Single.fromCallable {
             val users = db.userDao.getAll()
-            users?.let { if(users.size > 0) roomUser = it.last() }
+            users?.let { if(users.isNotEmpty()) roomUser = it.last() }
             roomUser?.let { val infocratisUser = InfocratiaUser(it.id, it.login, it.email, it.userImage,it.accessToken)
             infocratisUser } ?: InfocratiaUser("","","","","")
         }.subscribeOn(Schedulers.io())

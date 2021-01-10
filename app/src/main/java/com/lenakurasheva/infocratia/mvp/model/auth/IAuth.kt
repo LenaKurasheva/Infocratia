@@ -6,13 +6,19 @@ interface IAuth {
     fun getGoogleSignInAccount(data: Any?)
 
     fun accountExists(): Boolean
+
     fun getAccountEmail(): String
     fun getAccountFamilyName(): String
     fun getAccountPhotoUrl(): String
     fun getAccountId(): String
+
     fun signOut()
+
     fun getServerClientId(): String
     fun getClientSecret(): String
-    abstract fun getAuthCode(): String?
-    abstract fun getIdToken(): String?
+    fun getBackendClientSecret(): String
+    fun getBackendClientId(): String
+
+    fun getAuthCode(): String?
+    fun getIdToken(): String?
 }
